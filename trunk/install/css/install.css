@@ -1,0 +1,14 @@
+body {
+	margin: 0;
+	padding: 0;	
+}
+
+#main {
+	margin: 20px;
+	border: 1px solid #2E6543;
+	font-family:Geneva, Arial, Helvetica, sans-serif;
+	font-size: 15px;
+	padding: 25px;
+	padding-bottom: 30px;
+	width: 85%;		
+}
