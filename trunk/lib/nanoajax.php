@@ -141,7 +141,7 @@ class Ajax {
 							unset($_POST['save_url']);
 						} elseif ($_POST['post_type']=="link") {
 							// постинг ссылки
-							if (eregi("^http:\/\/", $_POST['url'])) $error[] = '{{ $lang.site.error_wrong_url }}';
+							if (!eregi("^http:\/\/", $_POST['url'])) $error[] = '{{ $lang.site.error_wrong_url }}';
 						} elseif ($_POST['post_type']=='rss') {
 							// сохранение RSS фида
 							$rss = new nanoRSS($this->conf);
