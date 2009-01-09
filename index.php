@@ -8,8 +8,6 @@
  *
  */
 
-error_reporting(0); // отключение вывода ошибок
-
 $site_path = str_replace('index.php', '', $_SERVER['SCRIPT_FILENAME']);
 include("lib/nanostarter.php");
 include("lib/nanoconfig.class.php");
@@ -30,13 +28,13 @@ $isOnePost = false;
 $section = '';
 switch ($path[0]) {	
 	case 'ajax':	
-		// AJAX запросы на всякое разное		
+		// AJAX Р·Р°РїСЂРѕСЃС‹ РЅР° РІСЃСЏРєРѕРµ СЂР°Р·РЅРѕРµ		
 		include_once('lib/nanoajax.php');		
 		$ajax = new Ajax($conf, $path);
 		exit;
 		break;
 	case 'captcha':
-		// Запрос картинки (CAPTCHA)
+		// Р—Р°РїСЂРѕСЃ РєР°СЂС‚РёРЅРєРё (CAPTCHA)
 		include_once('lib/nanocaptcha.class.php');
 		$captcha = new NanoCaptcha();
 		$captcha->create();
@@ -96,7 +94,7 @@ switch ($path[0]) {
 		}		
 		break;
 	case "rss":
-		// Генерация RSS контента			
+		// Р“РµРЅРµСЂР°С†РёСЏ RSS РєРѕРЅС‚РµРЅС‚Р°			
 		$rss = new nanoRSS($conf);		
 		switch ($path[1]) {
 			case "images":
@@ -121,38 +119,38 @@ switch ($path[0]) {
 		exit();
 		break;
 	default:
-		// первая или ошибочная страница
+		// РїРµСЂРІР°СЏ РёР»Рё РѕС€РёР±РѕС‡РЅР°СЏ СЃС‚СЂР°РЅРёС†Р°
 		$post = new NanoPost($conf);
 		$posts = $post->getList($_GET['page']);		
 		break; 
 }
 
 $site['top_title'] = $site['title'];
-// Вывод результата
+// Р’С‹РІРѕРґ СЂРµР·СѓР»СЊС‚Р°С‚Р°
 if ($posts['result'] == true && empty($posts['msg'])) {
 	if ($isOnePost) {
-		// один пост			
+		// РѕРґРёРЅ РїРѕСЃС‚			
 		$site['top_title'] = $site['title'].$site['title_separator'].$posts['title'];
 		$posts['text'] = nl2br($posts['text']);	
 		if ($path[2] === 'comment') {
-			// Сохранение комментария
+			// РЎРѕС…СЂР°РЅРµРЅРёРµ РєРѕРјРјРµРЅС‚Р°СЂРёСЏ
 			session_start();
-			$commentData = array(); // в случае ошибки сюда запомним форму комментария
+			$commentData = array(); // РІ СЃР»СѓС‡Р°Рµ РѕС€РёР±РєРё СЃСЋРґР° Р·Р°РїРѕРјРЅРёРј С„РѕСЂРјСѓ РєРѕРјРјРµРЅС‚Р°СЂРёСЏ
 			if (strtoupper($_POST['captcha']) === $_SESSION['nano_captcha']) {
-				// капча введена правильно, можно сохранять пост
+				// РєР°РїС‡Р° РІРІРµРґРµРЅР° РїСЂР°РІРёР»СЊРЅРѕ, РјРѕР¶РЅРѕ СЃРѕС…СЂР°РЅСЏС‚СЊ РїРѕСЃС‚
 				setcookie("nano_user_name", addslashes($_POST['name']), time()+3600*24*60, "/", false, 0);									
 				setcookie("nano_user_email", addslashes($_POST['email']), time()+3600*24*60, "/", false, 0);
 				$tmpPost = $post->getOne($_POST['post_id']);
 				if (!$tmpPost['comments']) {
-					// Этот пост нельзя комментировать!
+					// Р­С‚РѕС‚ РїРѕСЃС‚ РЅРµР»СЊР·СЏ РєРѕРјРјРµРЅС‚РёСЂРѕРІР°С‚СЊ!
 					$commentData = $_POST;
 				}
 				$comment = new NanoComments($conf);
 				$result = $comment->saveComment($_POST);
 				if ($result['result'] == true) {					
-					// посылаем уведомление (если нужно)
+					// РїРѕСЃС‹Р»Р°РµРј СѓРІРµРґРѕРјР»РµРЅРёРµ (РµСЃР»Рё РЅСѓР¶РЅРѕ)
 					if ($conf->config_val['notification']['active']) {
-						// посылаем уведомление на @-почту автору				
+						// РїРѕСЃС‹Р»Р°РµРј СѓРІРµРґРѕРјР»РµРЅРёРµ РЅР° @-РїРѕС‡С‚Сѓ Р°РІС‚РѕСЂСѓ				
 						$notification = new NanoNotification($conf);
 						$url = 'http://'.$_SERVER['SERVER_NAME'].$conf->config_val['site']['dir'].$path[0].'/'.$path[1];
 						$notification->sendNotification($_POST['name'].' ['.$_POST['email'].']', $_POST['comment'], $_SERVER['REMOTE_ADDR'], $url, $tmpPost['title'], ($tmpPost['comments_count']+1));
@@ -160,7 +158,7 @@ if ($posts['result'] == true && empty($posts['msg'])) {
 					header("Location: ".$conf->config_val['site']['dir'].$path[0].'/'.$path[1].'/#comment'.$result['comment_id']);
 				}
 			} else {
-				// нифига не верная капча!
+				// РЅРёС„РёРіР° РЅРµ РІРµСЂРЅР°СЏ РєР°РїС‡Р°!
 				$commentData = $_POST;
 			}
 		}
@@ -170,7 +168,7 @@ if ($posts['result'] == true && empty($posts['msg'])) {
 			$tpl->setBlock('can_have_comments');
 			if ($posts['comments_count'] == 0) $tpl->setBlock('no_comments');
 			else {
-				// есть комментарии
+				// РµСЃС‚СЊ РєРѕРјРјРµРЅС‚Р°СЂРёРё
 				$comment = new NanoComments($conf);
 				$comments = $comment->getList($path[1]);
 				$tpl->set('comments', $comments['comments']);
@@ -199,7 +197,7 @@ if ($posts['result'] == true && empty($posts['msg'])) {
 					$big_img = substr(substr_replace($posts['url'], '_original'.substr($posts['url'], strrpos($posts['url'],'.')), strrpos($posts['url'],'.')), 1);					
 					if ($site['dir'] != '/') $big_img = str_replace($site['dir'], '', '/'.$big_img);
 					if (file_exists($big_img)) {
-						// есть большая картинка!
+						// РµСЃС‚СЊ Р±РѕР»СЊС€Р°СЏ РєР°СЂС‚РёРЅРєР°!
 						$tpl_post->setBlock('original');
 						$tpl_post->set('big_url', $big_img);
 					} else {
@@ -237,7 +235,7 @@ if ($posts['result'] == true && empty($posts['msg'])) {
 		$tpl->set("one_post", $posts);		
 		$tpl->setBlock("one_post");		
 	} else {
-		// лента постов		
+		// Р»РµРЅС‚Р° РїРѕСЃС‚РѕРІ		
 		$site['top_title'] = stripslashes($site['title']);
 		for ($i=0; $i<count($posts['posts']); $i++) {	
 			$tpl_post = new NanoTemplate('templates/'.$conf->config_val['template'].'/'.$posts['posts'][$i]['post_type_name'].'_post.tpl', $conf->config_val['language']);
@@ -252,14 +250,14 @@ if ($posts['result'] == true && empty($posts['msg'])) {
 						$big_img = substr(substr_replace($posts['posts'][$i]['url'], '_original'.substr($posts['posts'][$i]['url'], strrpos($posts['posts'][$i]['url'],'.')), strrpos($posts['posts'][$i]['url'],'.')), 1);
 						if ($site['dir'] != '/') $big_img = str_replace($site['dir'], '', '/'.$big_img);
 						if (file_exists($big_img)) {
-							// есть большая картинка!
+							// РµСЃС‚СЊ Р±РѕР»СЊС€Р°СЏ РєР°СЂС‚РёРЅРєР°!
 							$tpl_post->setBlock('original');
 							$tpl_post->set('big_url', $big_img);
 						} else {
 							$tpl_post->setBlock('small');
 						}
 					} else {
-						// картинка с внешнего сервера
+						// РєР°СЂС‚РёРЅРєР° СЃ РІРЅРµС€РЅРµРіРѕ СЃРµСЂРІРµСЂР°
 						$tpl_post->setBlock('small');
 					}
 					$tpl_post->set('url', $posts['posts'][$i]['url']);
@@ -304,7 +302,7 @@ if ($posts['result'] == true && empty($posts['msg'])) {
 				$posts['posts'][$i]['comments_link'] = $tpl_comments_line->create();				
 			}
 		}	
-		// пагинация
+		// РїР°РіРёРЅР°С†РёСЏ
 		if ($posts['pages']['pages']) {			
 			$paginator = '';			
 			for ($p=0; $p<count($posts['pages']['pages']); $p++) {
@@ -331,7 +329,7 @@ if ($posts['result'] == true && empty($posts['msg'])) {
 	$tpl->set("posts", $posts['posts']);
 }
 
-if ($section) $tpl->set('section', $section); // выбран какой-то подраздел на сайте
+if ($section) $tpl->set('section', $section); // РІС‹Р±СЂР°РЅ РєР°РєРѕР№-С‚Рѕ РїРѕРґСЂР°Р·РґРµР» РЅР° СЃР°Р№С‚Рµ
 
 if ($_SESSION['isLogin']) {
 	$tpl->setBlock("can_edit");	
@@ -341,7 +339,7 @@ if ($_SESSION['isLogin']) {
 	if ($_SESSION['haveNewVersion']) {						
 		$tpl_author->setBlock('have_new_version');
 		$tpl_author->set('new_version_text', $_SESSION['haveNewVersionMsg']);
-		$_SESSION['haveNewVersion'] = false; // чтобы показывалось один раз, а не мусолило глаза
+		$_SESSION['haveNewVersion'] = false; // С‡С‚РѕР±С‹ РїРѕРєР°Р·С‹РІР°Р»РѕСЃСЊ РѕРґРёРЅ СЂР°Р·, Р° РЅРµ РјСѓСЃРѕР»РёР»Рѕ РіР»Р°Р·Р°
 	}	
 	$tpl->set('author_form', $tpl_author->create());	
 	
@@ -364,8 +362,8 @@ if ($_SESSION['isLogin']) {
 }
 
 if (isset($conf->config_val['without_cron']) && $conf->config_val['without_cron'] == true) {
-	// рекомендую включить обновления RSS каналов в cron !!!
-	// подробности в файле cron/rssupdater.php
+	// СЂРµРєРѕРјРµРЅРґСѓСЋ РІРєР»СЋС‡РёС‚СЊ РѕР±РЅРѕРІР»РµРЅРёСЏ RSS РєР°РЅР°Р»РѕРІ РІ cron !!!
+	// РїРѕРґСЂРѕР±РЅРѕСЃС‚Рё РІ С„Р°Р№Р»Рµ cron/rssupdater.php
 	$tpl->setBlock("cron_off");
 }
  
