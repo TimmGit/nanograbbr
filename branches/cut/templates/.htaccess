@@ -1,0 +1,3 @@
+<filesmatch "\.tpl$">
+deny from all
+</filesmatch>
