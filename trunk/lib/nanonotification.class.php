@@ -28,7 +28,7 @@ class NanoNotification {
  * @return bool
  */
 	function sendNotification($author, $comment, $ip, $url, $title, $commentCounter) {
-		$tpl = new NanoTemplate('templates/system/comment_notification.tpl');
+		$tpl = new NanoTemplate('templates/system/comment_notification.tpl', $conf->config_val['language']);
 		$tpl->set('author', strip_tags(stripslashes($author)));
 		$tpl->set('comment', strip_tags(stripslashes($comment))); // из текста коментария удаляем все теги и лишние слеши
 		$tpl->set('ip', $ip);

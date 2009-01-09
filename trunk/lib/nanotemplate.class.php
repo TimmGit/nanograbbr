@@ -14,14 +14,15 @@ class NanoTemplate {
 	var $parseResilt; 
 	var $needed_blocks = array(); // массив блоков, которые используются
 	var $blocks_stack = array(); // массив блоков, которые в обработке
+	var $language; // используемый язык
 	var $lang; // массив фраз
 	var $vars; // массив переменных и значений для замены в шаблоне
 	
-	function NanoTemplate($tplFile) {
-//		if (!file_exists($tplFile)) 
+	function NanoTemplate($tplFile, $lang = null) {
 		$this->templateFile = $tplFile;
 		$this->readTpl();
 		$this->parseTpl();
+		$this->language = $lang ? $lang : 'ru';		
 	}
 	
 /**
@@ -71,10 +72,9 @@ class NanoTemplate {
 		$f = strpos($element, '.');
 		$l = strrpos($element, '.');		
 		$lang_file = substr($element, $f+1, ($l-$f-1));
-		$lang_element = substr($element, ($l+1));
-		$language = "ru";		
-		if (strpos($_SERVER['PHP_SELF'], 'install')===false) include("langs/".$language."/".$lang_file.".inc.php");				
-		else include("../langs/".$language."/".$lang_file.".inc.php");				
+		$lang_element = substr($element, ($l+1));			
+		if (strpos($_SERVER['PHP_SELF'], 'install')===false) include("langs/".$this->language."/".$lang_file.".inc.php");				
+		else include("../langs/".$this->language."/".$lang_file.".inc.php");				
 		if (isset($lang)) $this->lang = $lang;		
 		return $this->lang[$lang_file][$lang_element];
 	}

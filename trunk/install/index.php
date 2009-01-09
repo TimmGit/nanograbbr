@@ -14,7 +14,7 @@
  */
 	include_once('../lib/nanotemplate.class.php');
 	session_start();
-	$tpl = new NanoTemplate('install.tpl');
+	$tpl = new NanoTemplate('install.tpl', ($_POST['lang']) ? $_POST['lang'] : $_SESSION['lang']);
 	switch ($_POST['page']) {
 		case "second":
 			// вторая страница инсталятора
@@ -88,7 +88,7 @@
 				$a = array('_host_'=> $_POST['host'], '_user_'=>$_POST['user'], '_passwd_'=>$_POST['passwd'], 
 						   '_name_'=>$_POST['name'], '_prefix_'=>$_POST['prefix'], '_dir_' => $dir, '_site_title_'=>addslashes($_POST['site_title']),
 						   '_password_'=>md5($_POST['password']), '_notification_'=>$_POST['notification'], '_update_'=>$_POST['check_update'], 
-						   '_email_'=>$_POST['email']);
+						   '_email_'=>$_POST['email'], '_language_'=>$_SESSION['lang']);
 				$configTxt = str_replace(array_keys($a), array_values($a), $configTxt);
 				$fp = fopen("../cfg/config.php", "w");
 				fwrite($fp, $configTxt);
@@ -136,30 +136,34 @@ function getConfigText() {
 	/**
 	* Данный конфиг содержит информацию, необходимую для функционирования сайта
 	* Вы можете по своему усмотрению менять настройки. Некоторые значения могут принимать только два значений: true - включено и false - выключено
+	* 
+	* This configuration file contains the information that is  necessary for the functioning of the site
 	*/
 	
-	\$cfg['version'] = '0.7'; // установленная версия движка
+	\$cfg['version'] = '0.7'; // установленная версия движка / current version of NanoGrabbr
 	
-	\$cfg['db']['host'] = '_host_'; // сервер БД
-	\$cfg['db']['user'] = '_user_'; // пользователь БД
-	\$cfg['db']['passwd'] = '_passwd_'; // пароль к БД
-	\$cfg['db']['name'] = '_name_'; // имя БД
-	\$cfg['db']['prefix'] = '_prefix_'; // префикс всех таблиц в БД
+	\$cfg['language'] = '_language_'; // язык сайта / site language
 	
-	\$cfg['site']['dir'] = '_dir_'; // Директория, в которой размещён сайт
-	\$cfg['site']['title'] = '_site_title_'; // TITLE сайта
-	\$cfg['site']['title_separator'] = ' / '; // разделитель для TITLE
+	\$cfg['db']['host'] = '_host_'; // сервер БД / DB server
+	\$cfg['db']['user'] = '_user_'; // пользователь БД / DB user
+	\$cfg['db']['passwd'] = '_passwd_'; // пароль к БД / DB password
+	\$cfg['db']['name'] = '_name_'; // имя БД / DB name
+	\$cfg['db']['prefix'] = '_prefix_'; // префикс всех таблиц в БД / prefix for all tables names in DB
+	
+	\$cfg['site']['dir'] = '_dir_'; // Директория, в которой размещён сайт / Site directory
+	\$cfg['site']['title'] = '_site_title_'; // TITLE сайта / site TITLE
+	\$cfg['site']['title_separator'] = ' / '; // разделитель для TITLE / TITLE separator
 
-	\$cfg['notification']['active'] = _notification_; // нужно ли посылать уведомления о новых комментариях
-	\$cfg['notification']['email'] = '_email_'; // @-адрес для отсылки уведомлений о комментариях	
+	\$cfg['notification']['active'] = _notification_; // нужно ли посылать уведомления о новых комментариях / Do you want receive notification about new comments?
+	\$cfg['notification']['email'] = '_email_'; // @-адрес для отсылки уведомлений о комментариях / Email for notification
 
-	\$cfg['template'] = 'default'; // шаблон, используемый сайтом (все шаблоны находятся в папке templates)
+	\$cfg['template'] = 'default'; // шаблон, используемый сайтом (все шаблоны находятся в папке templates) / Template used on site (all templates are stored in the folder 'templates')
 	
-	\$cfg['password'] = '_password_'; // пароль администратора в зашифрованном виде
+	\$cfg['password'] = '_password_'; // пароль администратора в зашифрованном виде / Administrator password (encrypted)
 	
-	\$cfg['without_cron'] = true; // флаг, указывающий на то, что сайт не использует cron (ЭТО ПЛОХО! CRON НУЖНО ИСПОЛЬЗОВАТЬ!). Подробности в cron/rssupdater.php
+	\$cfg['without_cron'] = true; // флаг, указывающий на то, что сайт не использует cron (ЭТО ПЛОХО! CRON НУЖНО ИСПОЛЬЗОВАТЬ!). Подробности в cron/rssupdater.php / This flag indicating that cron does not used on site. More info here: cron/rssupdater.php
 	
-	\$cfg['check_update'] = _update_; // флаг, указывающий на то, данная установка будет проверять обновления движка на сайте nanograbbr.com (для отключения нужно заменить true на false)
+	\$cfg['check_update'] = _update_; // флаг, указывающий на то, данная установка будет проверять обновления движка на сайте nanograbbr.com (для отключения нужно заменить true на false) / This flag indicating that automatic updates for NanoGrabbr engine is enabled (if you wants to turned it off, you should change value from 'true' to 'false')
 
 ?>	
 CFGTEXT;

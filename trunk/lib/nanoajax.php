@@ -64,7 +64,7 @@ class Ajax {
 				switch ($_POST['code']) {
 					case "author_panel":
 						// панель автора
-						$tpl = new NanoTemplate("templates/".$conf->config_val['template']."/author_form.tpl");
+						$tpl = new NanoTemplate("templates/".$conf->config_val['template']."/author_form.tpl", $conf->config_val['language']);
 						$tpl->show();
 						break;
 					case "comment_form":
