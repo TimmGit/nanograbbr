@@ -1,5 +1,7 @@
 AddDefaultCharset UTF-8
 
+php_value display_errors 0
+
 RewriteEngine on
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
