@@ -1,0 +1,9 @@
+{{ BEGIN have_new_version }}<div class="new_version">{{ $new_version_text }}</div>{{ END have_new_version }}
+<div id="posticons">{{ $lang.site.create_post }}: 
+<a href="#" onclick="showForm('text');"><img src="{{ $site.dir }}templates/default/i/page_white_add.png" width="16" height="16" title="{{ $lang.site.create_post_text }}" alt="{{ $lang.site.create_post_text }}" border="0" align="absmiddle" /> {{ $lang.site.create_post_text }}</a>&nbsp;
+<a href="#" onclick="showForm('image');"><img src="{{ $site.dir }}templates/default/i/picture_add.png" width="16" height="16" title="{{ $lang.site.create_post_image }}" alt="{{ $lang.site.create_post_image }}" border="0" align="absmiddle" /> {{ $lang.site.create_post_image }}</a>&nbsp;
+<a href="#" onclick="showForm('video');"><img src="{{ $site.dir }}templates/default/i/film_add.png" width="16" height="16" title="{{ $lang.site.create_video }}" alt="{{ $lang.site.create_video }}" border="0" align="absmiddle" /> {{ $lang.site.create_video }}</a>&nbsp;
+<a href="#" onclick="showForm('quote');"><img src="{{ $site.dir }}templates/default/i/script_add.png" width="16" height="16" title="{{ $lang.site.create_post_quote }}" alt="{{ $lang.site.create_post_quote }}" border="0" align="absmiddle" /> {{ $lang.site.create_post_quote }}</a>&nbsp;
+<a href="#" onclick="showForm('link');"><img src="{{ $site.dir }}templates/default/i/link_add.png" width="16" height="16" title="{{ $lang.site.create_link }}" alt="{{ $lang.site.create_link }}" border="0" align="absmiddle" /> {{ $lang.site.create_link }}</a>&nbsp;
+<a href="#" onclick="showForm('rss');"><img src="{{ $site.dir }}templates/default/i/feed_add.png" width="16" height="16" title="{{ $lang.site.create_rss }}" alt="{{ $lang.site.create_rss }}" border="0" align="absmiddle" /> {{ $lang.site.create_rss }}</a>&nbsp;
+ </div>
