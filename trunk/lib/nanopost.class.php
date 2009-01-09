@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Êëàññ äëÿ ğàáîòû ñ ïîñòàìè â NanoGrabbr
+ * ĞšĞ»Ğ°ÑÑ Ğ´Ğ»Ñ Ñ€Ğ°Ğ±Ğ¾Ñ‚Ñ‹ Ñ Ğ¿Ğ¾ÑÑ‚Ğ°Ğ¼Ğ¸ Ğ² NanoGrabbr
  * 
  * @package NanoGrabbr <http://nanograbbr.com> 
  * @author Aist <aist@nanograbbr.org>
@@ -14,8 +14,8 @@ class NanoPost {
 	var $db;
 	var $post_types = array('text', 'quote', 'image', 'video', 'link', 'feed');
 	var $post_edit_icons = array('page_white_edit', 'script_edit', 'picture_edit', 'film_edit', 'link_edit', 'feed_edit');
-	var $postPerPage = 10; // êîëè÷åñòâî ïîñòîâ íà ñòğàíèöå
-	var $pagesPerLine = 5; // êîëè÷åñòâî ñòğàíèö â áëîêå ïàãèíàòîğà
+	var $postPerPage = 10; // ĞºĞ¾Ğ»Ğ¸Ñ‡ĞµÑÑ‚Ğ²Ğ¾ Ğ¿Ğ¾ÑÑ‚Ğ¾Ğ² Ğ½Ğ° ÑÑ‚Ñ€Ğ°Ğ½Ğ¸Ñ†Ğµ
+	var $pagesPerLine = 5; // ĞºĞ¾Ğ»Ğ¸Ñ‡ĞµÑÑ‚Ğ²Ğ¾ ÑÑ‚Ñ€Ğ°Ğ½Ğ¸Ñ† Ğ² Ğ±Ğ»Ğ¾ĞºĞµ Ğ¿Ğ°Ğ³Ğ¸Ğ½Ğ°Ñ‚Ğ¾Ñ€Ğ°
 	
 	function NanoPost($conf) {
 		global $db;
@@ -24,17 +24,17 @@ class NanoPost {
 	}
 	
 /**
- * Ïîëó÷åíèå ñïèñêà ïîñòîâ
+ * ĞŸĞ¾Ğ»ÑƒÑ‡ĞµĞ½Ğ¸Ğµ ÑĞ¿Ğ¸ÑĞºĞ° Ğ¿Ğ¾ÑÑ‚Ğ¾Ğ²
  *
- * @param int $page - íîìåğ ñòğàíèöû (ïîñòû â ñïèñêå ğàçşèâàşòñÿ íà ñòğàíèöû)
- * @param string $type - òèï çàïğàøèâàåìûõ ïîñòîâ
+ * @param int $page - Ğ½Ğ¾Ğ¼ĞµÑ€ ÑÑ‚Ñ€Ğ°Ğ½Ğ¸Ñ†Ñ‹ (Ğ¿Ğ¾ÑÑ‚Ñ‹ Ğ² ÑĞ¿Ğ¸ÑĞºĞµ Ñ€Ğ°Ğ·ÑĞ¸Ğ²Ğ°ÑÑ‚ÑÑ Ğ½Ğ° ÑÑ‚Ñ€Ğ°Ğ½Ğ¸Ñ†Ñ‹)
+ * @param string $type - Ñ‚Ğ¸Ğ¿ Ğ·Ğ°Ğ¿Ñ€Ğ°ÑˆĞ¸Ğ²Ğ°ĞµĞ¼Ñ‹Ñ… Ğ¿Ğ¾ÑÑ‚Ğ¾Ğ²
  * @return array
  */
 	function getList($page, $type = null) {		
 		$post_type_id = array_flip($this->post_types);
 		if (empty($type)) $r = $this->db->select('posts', '*', array('published'=>1));
 		else {
-			// çàïğîøåíû ïîñòû îïğåäåëåííîãî òèïà
+			// Ğ·Ğ°Ğ¿Ñ€Ğ¾ÑˆĞµĞ½Ñ‹ Ğ¿Ğ¾ÑÑ‚Ñ‹ Ğ¾Ğ¿Ñ€ĞµĞ´ĞµĞ»ĞµĞ½Ğ½Ğ¾Ğ³Ğ¾ Ñ‚Ğ¸Ğ¿Ğ°
 			if (!in_array($type, $this->post_types)) return array('result'=>false, 'msg'=>'Wrong post type');		
 			$r = $this->db->select('posts', '*', array('post_type'=>$post_type_id[$type], 'published'=>1));			
 		}		
@@ -70,10 +70,10 @@ class NanoPost {
 	}
 	
 /**
- * Ïîëó÷åíèå îäíîãî êîíêğåòíîãî ïîñòà
+ * ĞŸĞ¾Ğ»ÑƒÑ‡ĞµĞ½Ğ¸Ğµ Ğ¾Ğ´Ğ½Ğ¾Ğ³Ğ¾ ĞºĞ¾Ğ½ĞºÑ€ĞµÑ‚Ğ½Ğ¾Ğ³Ğ¾ Ğ¿Ğ¾ÑÑ‚Ğ°
  *
- * @param int $postID - èäåíòèôèêàòîğ ïîñòà
- * @param int $postType - òèï ïîñòà
+ * @param int $postID - Ğ¸Ğ´ĞµĞ½Ñ‚Ğ¸Ñ„Ğ¸ĞºĞ°Ñ‚Ğ¾Ñ€ Ğ¿Ğ¾ÑÑ‚Ğ°
+ * @param int $postType - Ñ‚Ğ¸Ğ¿ Ğ¿Ğ¾ÑÑ‚Ğ°
  * @return array
  */
 	function getOne($postID, $postType = null) {
@@ -85,7 +85,7 @@ class NanoPost {
 		$post['title'] = stripslashes($post['title']);
 		$post['post_type'] = $this->post_types[$post['post_type']];
 		if (!empty($postType) && $post['post_type'] != $postType) {
-			// íåò ïîñòà ıòîãî òèïà ñ òàêèì ID
+			// Ğ½ĞµÑ‚ Ğ¿Ğ¾ÑÑ‚Ğ° ÑÑ‚Ğ¾Ğ³Ğ¾ Ñ‚Ğ¸Ğ¿Ğ° Ñ Ñ‚Ğ°ĞºĞ¸Ğ¼ ID
 			$post['result'] = false;
 			$post['msg'] = 'Wrong type or id';
 		} else {
@@ -95,10 +95,10 @@ class NanoPost {
 	}
 	
 /**
- * Óäàëåíèå ïîñòà
+ * Ğ£Ğ´Ğ°Ğ»ĞµĞ½Ğ¸Ğµ Ğ¿Ğ¾ÑÑ‚Ğ°
  *
- * @param int $postID - èäåíòèôèêàòîğ ïîñòà
- * @param int $postType - òèï ïîñòà
+ * @param int $postID - Ğ¸Ğ´ĞµĞ½Ñ‚Ğ¸Ñ„Ğ¸ĞºĞ°Ñ‚Ğ¾Ñ€ Ğ¿Ğ¾ÑÑ‚Ğ°
+ * @param int $postType - Ñ‚Ğ¸Ğ¿ Ğ¿Ğ¾ÑÑ‚Ğ°
  * @return array
  */
 	function deleteOne($postID, $postType) {		
@@ -116,16 +116,16 @@ class NanoPost {
 	}
 	
 /**
- * Ñîõğàíåíèå íîâîãî ïîñòà è ïîñòà, ïîñëå ğåäàêòèğîâàíèÿ
+ * Ğ¡Ğ¾Ñ…Ñ€Ğ°Ğ½ĞµĞ½Ğ¸Ğµ Ğ½Ğ¾Ğ²Ğ¾Ğ³Ğ¾ Ğ¿Ğ¾ÑÑ‚Ğ° Ğ¸ Ğ¿Ğ¾ÑÑ‚Ğ°, Ğ¿Ğ¾ÑĞ»Ğµ Ñ€ĞµĞ´Ğ°ĞºÑ‚Ğ¸Ñ€Ğ¾Ğ²Ğ°Ğ½Ğ¸Ñ
  *
- * @param array $post - ìàññèâ ñ äàííûìè ïîñòà
+ * @param array $post - Ğ¼Ğ°ÑÑĞ¸Ğ² Ñ Ğ´Ğ°Ğ½Ğ½Ñ‹Ğ¼Ğ¸ Ğ¿Ğ¾ÑÑ‚Ğ°
  * @return array
  */
 	function savePost($post) {
 		if (!in_array($post['post_type'], $this->post_types)) return array('result'=>false, 'msg'=>'Wrong post type');		
 		$post['post_type'] = array_search($post['post_type'], $this->post_types);		
 		if ($post['post_id']) {
-			// ğåäàêòèğîâàíèå ïîñòà
+			// Ñ€ĞµĞ´Ğ°ĞºÑ‚Ğ¸Ñ€Ğ¾Ğ²Ğ°Ğ½Ğ¸Ğµ Ğ¿Ğ¾ÑÑ‚Ğ°
 			$id = $post['post_id'];
 			unset($post['post_id']);
 			$pt = $post['post_type'];			
@@ -133,7 +133,7 @@ class NanoPost {
 			if ($result) return array('result'=>true, 'post_id'=>$id, 'post_type'=>$pt);
 			else return array('result'=>false);
 		} else {
-			// ñîõğàíåíèå íîâîãî ïîñòà
+			// ÑĞ¾Ñ…Ñ€Ğ°Ğ½ĞµĞ½Ğ¸Ğµ Ğ½Ğ¾Ğ²Ğ¾Ğ³Ğ¾ Ğ¿Ğ¾ÑÑ‚Ğ°
 			unset($post['post_id']);
 			$post['posted_date'] = date('Y-m-d H:i:s');					
 			$result = $this->db->insert('posts', $post);
@@ -142,24 +142,24 @@ class NanoPost {
 	}
 	
 /**
- * Ïàãèíàòîğ (ğàçáèåíèå ñïèñêà ïîñòîâ íà ñòğàíèöû)
+ * ĞŸĞ°Ğ³Ğ¸Ğ½Ğ°Ñ‚Ğ¾Ñ€ (Ñ€Ğ°Ğ·Ğ±Ğ¸ĞµĞ½Ğ¸Ğµ ÑĞ¿Ğ¸ÑĞºĞ° Ğ¿Ğ¾ÑÑ‚Ğ¾Ğ² Ğ½Ğ° ÑÑ‚Ñ€Ğ°Ğ½Ğ¸Ñ†Ñ‹)
  *
- * @param int $pageCount - ñ÷åò÷èê ïîñòîâ
- * @param int $pageNum - íîìåğ ñòğàíèöû
+ * @param int $pageCount - ÑÑ‡ĞµÑ‚Ñ‡Ğ¸Ğº Ğ¿Ğ¾ÑÑ‚Ğ¾Ğ²
+ * @param int $pageNum - Ğ½Ğ¾Ğ¼ĞµÑ€ ÑÑ‚Ñ€Ğ°Ğ½Ğ¸Ñ†Ñ‹
  * @return array
  */
 	function paginator($pageCount = 1, $pageNum = null) {
 		$pageNum++;
-		// Íîìåğ áëîêà ñî ñòğàíèöàìè (0 = 1-8, 1 = 9-16, 2 = 16-...)
+		// ĞĞ¾Ğ¼ĞµÑ€ Ğ±Ğ»Ğ¾ĞºĞ° ÑĞ¾ ÑÑ‚Ñ€Ğ°Ğ½Ğ¸Ñ†Ğ°Ğ¼Ğ¸ (0 = 1-8, 1 = 9-16, 2 = 16-...)
 		$pagesBlockNum = intval(($pageNum-1) / $this->pagesPerLine);
-		// Ïåğâàÿ ñòğàíèöà â áëîêå
+		// ĞŸĞµÑ€Ğ²Ğ°Ñ ÑÑ‚Ñ€Ğ°Ğ½Ğ¸Ñ†Ğ° Ğ² Ğ±Ğ»Ğ¾ĞºĞµ
 		$pageStart = $pagesBlockNum * $this->pagesPerLine + 1;
-		// Ïîñëåäíÿÿ ñòğàíèöà â áëîêå (íå áîëüøå ÷åì êîëëè÷åñòâî ñòğàíèö)
+		// ĞŸĞ¾ÑĞ»ĞµĞ´Ğ½ÑÑ ÑÑ‚Ñ€Ğ°Ğ½Ğ¸Ñ†Ğ° Ğ² Ğ±Ğ»Ğ¾ĞºĞµ (Ğ½Ğµ Ğ±Ğ¾Ğ»ÑŒÑˆĞµ Ñ‡ĞµĞ¼ ĞºĞ¾Ğ»Ğ»Ğ¸Ñ‡ĞµÑÑ‚Ğ²Ğ¾ ÑÑ‚Ñ€Ğ°Ğ½Ğ¸Ñ†)
 		$pageEnd   = $pageStart + $this->pagesPerLine - 1;		
 		if($pageEnd > $pageCount) $pageEnd = $pageCount;
 		$linkBefore = $pageStart > 1 ? ($pageCount - $pageStart+2) : '';
 		$linkAfter = $pageEnd < $pageCount ? ($pageCount - $pageEnd) : '';
-		// Ñòğàíèöû
+		// Ğ¡Ñ‚Ñ€Ğ°Ğ½Ğ¸Ñ†Ñ‹
 		$pages = array();
 		for($i = $pageStart; $i <= $pageEnd; $i++){
 			if($pageNum == $i) $pages[] = array('page'=>$pageCount - $i + 1, 'active'=>true);
